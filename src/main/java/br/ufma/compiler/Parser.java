@@ -51,6 +51,16 @@ public class Parser {
             digit();
             System.out.println("sub");
             oper();
+        } else if (peek() == '*'){
+            match('*');
+            digit();
+            System.out.println("mult");
+            oper();
+        } else if (peek() == '/'){
+            match('/');
+            digit();
+            System.out.println("div");
+            oper();
         }
     }
 
