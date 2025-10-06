@@ -6,11 +6,11 @@ public class Parser {
 
     public Parser (byte[] input) {
         scan = new Scanner(input);
-        currentToken = scan.nextToken();
+        //currentToken = scan.nextToken();
     }
 
     private void nextToken(){
-        currentToken = scan.nextToken();
+        //currentToken = scan.nextToken();
     }
 
     public void parse () {
