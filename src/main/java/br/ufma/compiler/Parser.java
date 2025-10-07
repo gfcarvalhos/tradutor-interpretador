@@ -26,7 +26,7 @@ public class Parser {
     }
 
     void expr() {
-        number();
+        term();
         oper();
     }
 
@@ -35,25 +35,35 @@ public class Parser {
         match(TokenType.NUMBER);
     }
 
+    void term () {
+        if (currentToken.type == TokenType.NUMBER) number();
+        else if (currentToken.type == TokenType.IDENT) {
+            System.out.println("push " + currentToken.lexeme);
+            match(TokenType.IDENT);
+        } else {
+            throw new Error("syntax error");
+        }
+    }
+
     void oper () {
         if (currentToken.type == TokenType.PLUS) {
             match(TokenType.PLUS);
-            number();
+            term();
             System.out.println("add");
             oper();
         } else if (currentToken.type == TokenType.MINUS) {
             match(TokenType.MINUS);
-            number();
+            term();
             System.out.println("sub");
             oper();
         } else if (currentToken.type == TokenType.MULT){
             match(TokenType.MULT);
-            number();
+            term();
             System.out.println("mult");
             oper();
         } else if (currentToken.type == TokenType.DIV){
             match(TokenType.DIV);
-            number();
+            term();
             System.out.println("div");
             oper();
         }
