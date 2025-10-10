@@ -1,8 +1,18 @@
 package br.ufma.compiler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Scanner {
     private byte[] input;
     private int current;
+
+    private static final Map<String, TokenType> keywords;
+
+    static {
+        keywords = new HashMap<>();
+        keywords.put("let", TokenType.LET);
+    }
 
     public Scanner (byte[] input){
         this.input = input;
@@ -46,7 +56,9 @@ public class Scanner {
         while (isAlphaNumeric(peek())) advance();
 
         String id = new String(input, start,current-start);
-        return new Token(TokenType.IDENT, id);
+        TokenType type = keywords.get(id);
+        if (type == null) type = TokenType.IDENT;
+        return new Token(type, id);
     }
 
     private void skipWhitespace () {
@@ -85,6 +97,12 @@ public class Scanner {
                 return new Token(TokenType.DIV, "/");
             case '\0':
                 return new Token(TokenType.EOF, "EOF");
+            case '=':
+                advance();
+                return new Token(TokenType.EQ, "=");
+            case ';':
+                advance();
+                return new Token(TokenType.SEMICOLON, ";");
             default:
                 throw new Error("lexical error at "+ ch);
         }
