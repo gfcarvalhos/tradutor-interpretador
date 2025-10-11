@@ -9,5 +9,8 @@ public class Main {
                 """;;
         Parser p = new Parser (input.getBytes());
         p.parse();
+
+        Interpretador i = new Interpretador(p.output());
+        i.run();
     }
 }
