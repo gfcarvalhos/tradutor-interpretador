@@ -9,12 +9,22 @@ public class Parser {
         currentToken = scan.nextToken();
     }
 
-    private void nextToken(){
+    private void nextToken() {
         currentToken = scan.nextToken();
     }
 
-    public void parse () {
+    void letStatement() {
+        match(TokenType.LET);
+        var id = currentToken.lexeme;
+        match(TokenType.IDENT);
+        match(TokenType.EQ);
         expr();
+        System.out.println("pop "+id);
+        match(TokenType.SEMICOLON);
+    }
+
+    public void parse () {
+        letStatement();
     }
 
     private void match (TokenType t) {
